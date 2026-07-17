@@ -16,6 +16,10 @@ class UserRepository:
     async def get_by_email(self, email: str) -> User | None:
         result = await self.session.execute(select(User).where(User.email == email.lower()))
         return result.scalar_one_or_none()
+    
+    async def get_by_phone(self, phone: str) -> User | None:
+        result = await self.session.execute(select(User).where(User.phone == phone))
+        return result.scalar_one_or_none()
 
     async def create_user(self, email: str, password_hash: str, full_name: str, phone: str | None) -> User:
         user = User(

@@ -18,6 +18,10 @@ class AuthService:
         existing_user = await self.users.get_by_email(email)
         if existing_user is not None:
             raise ConflictException("This email is already registered. Try logging in instead.")
+        if phone:
+            existing_phone = await self.users.get_by_phone(phone)
+            if existing_phone is not None:
+                raise ConflictException("This phone number is already registered to another account.")
         user = await self.users.create_user(email, hash_password(password), full_name, phone)
         return self._tokens_for(user)
 
