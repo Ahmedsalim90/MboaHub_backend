@@ -19,12 +19,16 @@ class LoginRequest(StrictBaseModel):
 
 
 class RefreshRequest(StrictBaseModel):
-    refresh_token: str
+    refresh_token: str | None = None
 
 
 class VerifyOtpRequest(StrictBaseModel):
     phone: str = Field(min_length=5, max_length=32)
     otp: str = Field(min_length=4, max_length=8)
+
+
+class ResendOtpRequest(StrictBaseModel):
+    phone: str = Field(min_length=5, max_length=32)
 
 
 class UserSummary(StrictBaseModel):
